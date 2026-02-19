@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  orchestrator:
+    build: .
+    image: multi-agent-architecture:latest
+    container_name: ma_orchestrator
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data:ro
+      - ./outputs:/app/outputs
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["python", "run_orchestrator.py", "--data", "data/sample_input.csv"]

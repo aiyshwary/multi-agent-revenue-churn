@@ -1,0 +1,14 @@
+Test report — pytest -q
+Date: 2026-02-16
+
+Command:
+pytest -q
+
+Result (summary):
+27 passed, 1 skipped, 14 warnings in 2.88s
+
+How to reproduce:
+1) python -m venv .venv && source .venv/bin/activate
+2) pip install -r requirements.txt
+3) pytest -q
+

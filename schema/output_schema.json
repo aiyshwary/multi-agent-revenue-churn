@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agentic revenue/churn pipeline output",
+  "type": "object",
+  "required": ["plan", "quarterly", "pivot", "churn_report", "validations"],
+  "properties": {
+    "plan": { "type": "array" },
+    "quarterly": {
+      "type": "object",
+      "additionalProperties": { "type": "array" }
+    },
+    "pivot": { "type": "array" },
+    "churn_report": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["revenue_loss", "revenue_gain", "lost_customers", "new_customers"],
+        "properties": {
+          "revenue_loss": { "type": "number" },
+          "revenue_gain": { "type": "number" },
+          "lost_customers": { "type": "integer" },
+          "new_customers": { "type": "integer" }
+        }
+      }
+    },
+    "validations": { "type": "object" }
+  }
+}
