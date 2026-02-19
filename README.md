@@ -6,7 +6,7 @@ Why this project
 - Demonstrates a clear separation of responsibilities: **LLMs for planning and critique, Python for numeric work**.
 - Shows real-world considerations (token budgets, chunked processing, retries, and observability) so the system behaves predictably at scale.
 
-## Quick start (3 minutes)
+## Quick start
 1. Prepare environment:
    ```bash
    python -m venv .venv
