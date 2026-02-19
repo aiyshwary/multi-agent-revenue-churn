@@ -1,60 +1,51 @@
 # Multi‑Agent Revenue & Churn Analyzer
 
-A small, practical demo that combines deterministic Python processing with agentic reasoning (LLMs) to analyze client revenue and detect churn. The project is intentionally simple to run locally, auditable in its computations, and easy to extend.
+A compact, practical pipeline that combines deterministic Python analytics with agentic reasoning (LLMs) to analyze revenue and surface churn insights. It’s designed to be easy to run locally, auditable, and straightforward to extend.
 
-Why this project
-- Demonstrates a clear separation of responsibilities: **LLMs for planning and critique, Python for numeric work**.
-- Shows real-world considerations (token budgets, chunked processing, retries, and observability) so the system behaves predictably at scale.
+Why this repository
+- Clean separation of responsibilities: `LLMs` plan and critique while `Python/pandas` performs all numeric work.
+- Built to show real‑world constraints: token budgets, chunked processing for large files, retries, and basic observability.
 
-## Quick start (3 minutes)
-1. Prepare environment:
+Quick start — run in three steps
+1. Create and activate a virtual environment:
    ```bash
    python -m venv .venv
    source .venv/bin/activate
    pip install -r requirements.txt
    ```
-2. Run tests:
+2. Run the unit tests:
    ```bash
    pytest -q
    ```
-3. Run the pipeline (example):
+3. Run the pipeline on the sample data:
    ```bash
    python run_orchestrator.py --data data/sample_input.csv
    ```
 
-Programmatic examples
-- Run the pipeline in parallel chunks:
-  ```bash
-  python -c "from agents.core import run_full_pipeline; print(run_full_pipeline('data/sample_input.csv', chunk_size=1000, parallel_workers=4))"
-  ```
-- Use the Orchestrator programmatically:
-  ```bash
-  python -c "from agents import Orchestrator; o=Orchestrator('data/sample_input.csv', max_workers=4); print(o.run())"
-  ```
+Quick demo
+- After a run, check `outputs/` for:
+  - `churn_report.json` — churn details per client
+  - `client_quarterly_revenue.csv` — per-client quarterly aggregates
+  - `visualization/` — HTML/PNG charts you can open in a browser
 
-## What it does (brief)
-- Normalizes input data (CSV/Excel), assigns quarters, and aggregates revenue.
-- Computes per‑client quarterly revenue and churn metrics.
-- Validates results deterministically and optionally via an LLM reviewer.
-- Persists outputs and lightweight run metrics to `outputs/`.
+How it works (short)
+- Planner emits an executable plan (list or graph of nodes).
+- Orchestrator executes steps (Executor), runs deterministic validators, and uses Reflection to decide retry/replan actions.
+- Memory manager persists short summaries and (optionally) semantic snippets for later retrieval.
 
-## Principles
-- LLMs THINK; Python COMPUTES — numeric aggregation is always done in code.
-- Keep prompts small: use compressed summaries and semantic retrieval when needed.
-- Make runs idempotent and observable (logs, metrics, token traces).
+Design principles
+- LLMs for high‑level reasoning; Python for all math and aggregation.
+- Keep LLM prompts small — use summaries and semantic retrieval when needed.
+- Make runs idempotent, auditable, and testable.
 
-## Files to inspect
-- `agents/` — orchestrator, tools, LLM adapters, validators, visualizers.
-- `tests/` — unit tests for core behaviours and edge cases.
-- `outputs/` — generated CSV/JSON and visualizations.
+Files to look at first
+- `agents/` — core implementation (orchestrator, tools, LLM client, visualizations).
+- `tests/` — unit tests that demonstrate behavior and edge cases.
+- `docs/` — architecture and pipeline flow diagrams.
 
----
+Deployment
+- Local container: `make build` / `make up` (uses `docker-compose.yml`).
+- CI: `.github/workflows/ci.yml` runs the tests; `publish.yml` builds/publishes the container image.
 
-## Deployment (Docker + CI) 🔧
-This repository already contains a Dockerfile, `docker-compose.yml`, a Makefile, and CI workflows. Use `make up` to run locally in Docker, and `make build` to produce a local image.
-
-If you want a deployable HTTP endpoint or Kubernetes manifests, I can add those next.
-
----
-
-If you'd like me to prepare a ZIP for submission, a suggested email body, or open a PR with a demo endpoint, tell me which and I’ll take care of it.
+Maintainer
+- aiyshwarya aruchamy
