@@ -6,8 +6,8 @@ Why this repository
 - Clean separation of responsibilities: `LLMs` plan and critique while `Python/pandas` performs all numeric work.
 - Built to show real‑world constraints: token budgets, chunked processing for large files, retries, and basic observability.
 
-Quick start — run in three steps
-1. Create and activate a virtual environment:
+## Quick start (3 minutes)
+1. Prepare environment:
    ```bash
    python -m venv .venv
    source .venv/bin/activate
